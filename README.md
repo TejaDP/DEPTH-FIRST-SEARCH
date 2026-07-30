@@ -106,6 +106,8 @@ G F <BR>
 <h3>PROGRAM:</h3>
 <pre>
 from collections import defaultdict, deque
+import networkx as nx
+import matplotlib.pyplot as plt
 
 def bfs(graph, start):
     visited = set()
@@ -120,24 +122,43 @@ def bfs(graph, start):
             if neighbor not in visited:
                 visited.add(neighbor)
                 queue.append(neighbor)
+
 graph = defaultdict(list)
 
 v = int(input("Enter number of vertices: "))
 e = int(input("Enter number of edges: "))
 
-print("Enter the edges:")
+print("Enter edges (u v):")
 for _ in range(e):
-    u, vtx = map(int, input().split())
-    graph[u].append(vtx)
-    graph[vtx].append(u)   # Remove this line for a directed graph
+    u, v = input().split()
+    graph[u].append(v)
+    graph[v].append(u)      # Remove this line for directed graph
 
-start = int(input("Enter starting vertex: "))
+start = input("Enter starting vertex: ")
 
-print("BFS Traversal:")
+print("\nBFS Traversal:")
 bfs(graph, start)
+
+G = nx.Graph()
+
+for node in graph:
+    for neighbor in graph[node]:
+        G.add_edge(node, neighbor)
+
+plt.figure(figsize=(6,6))
+nx.draw(
+    G,
+    with_labels=True,
+    node_color="skyblue",
+    node_size=1200,
+    font_size=12,
+    edge_color="black"
+)
+plt.title("Graph")
+plt.show()
 </pre>
 <h3>OUTPUT:</h3>
-<img width="323" height="267" alt="Screenshot 2026-07-29 211243" src="https://github.com/user-attachments/assets/f46b5774-0246-4041-90b5-68d8cb92f66a" />
+<img width="786" height="737" alt="image" src="https://github.com/user-attachments/assets/f846910e-d5c1-4a86-bc25-8b30df69dee1" />
 
 <h3>Result:</h3>
 <hr>
